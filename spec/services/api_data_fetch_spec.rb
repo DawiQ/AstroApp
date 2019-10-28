@@ -14,7 +14,7 @@ RSpec.describe ApiDataFetch do
 
     ApiDataFetch.call()
 
-    expect( Event.count ).to eq(22)
+    expect( Event.count ).to eq(19)
     expect( Preference.count ).to eq(2)
   end
 end

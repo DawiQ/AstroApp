@@ -4,6 +4,7 @@ class ApiDataFetch
 
   def initialize()
     @api_url = 'http://dawiq.lh.pl/apis/'
+    Event.destroy_all
   end
 
   def call
@@ -12,11 +13,8 @@ class ApiDataFetch
 
     data.each do |row|
       begin
-        date = row["date"].match(/(\w+) (\d+)/)
-        month = date[1]
-        day = date[2]
-        year = Date.current.year
-        full_date = Date.strptime("#{month}-#{day}-#{year}", '%b-%e-%Y')
+        date = row["date"]
+        full_date = Date.strptime("#{date}", '%d-%m-%Y')
 
         raise "Missing event name" if row["name"].first.nil?
         raise "Missing type name" if row["type"].first.nil?
