@@ -4,6 +4,9 @@ class ApiDataFetch
 
   def initialize()
     @api_url = 'http://dawiq.lh.pl/apis/'
+    @latitude = 51.759
+    @longitude = 19.457
+
     Event.destroy_all
   end
 
@@ -13,8 +16,13 @@ class ApiDataFetch
 
     data.each do |row|
       begin
-        date = row["date"]
-        full_date = Date.strptime("#{date}", '%d-%m-%Y')
+        date = Date.strptime("#{row["date"]}", '%d-%m-%Y').to_s
+        event_starts = nil
+
+        Time.use_zone("Europe/Berlin") do
+          sun_times = SunTimes.new
+          event_starts = sun_times.set(Time.zone.parse(date), @latitude, @longitude) + 3.hours
+        end
 
         raise "Missing event name" if row["name"].first.nil?
         raise "Missing type name" if row["type"].first.nil?
@@ -24,7 +32,7 @@ class ApiDataFetch
 
 
         preference = Preference.find_or_create_by(name: type_name)
-        Event.create(date: date, preference_id: preference.id, name: name)
+        Event.create(date: event_starts, preference_id: preference.id, name: name)
       rescue => e
         Rails.logger.error ("[ApiDataFetch] Failed to import, error: #{e}")
         next
