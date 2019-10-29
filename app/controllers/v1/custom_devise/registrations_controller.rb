@@ -11,7 +11,6 @@ class V1::CustomDevise::RegistrationsController < Devise::RegistrationsControlle
 
   # POST /users
   def create
-    binding.pry
     build_resource(sign_up_params)
 
     if resource.save
@@ -35,7 +34,6 @@ class V1::CustomDevise::RegistrationsController < Devise::RegistrationsControlle
   private
 
   def sign_up_params
-    binding.pry
     params.fetch(:user).permit([:password, :password_confirmation, :email, :first_name, :last_name])
   end
 
