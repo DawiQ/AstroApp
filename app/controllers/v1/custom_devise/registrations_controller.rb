@@ -3,23 +3,26 @@ class V1::CustomDevise::RegistrationsController < Devise::RegistrationsControlle
 
   acts_as_token_authentication_handler_for User
 
-  # skip_before_filter :authenticate_entity_from_token!, only: [:create]
-  # skip_before_filter :authenticate_entity!, only: [:create]
+  skip_before_filter :authenticate_entity_from_token!, only: [:create]
+  skip_before_filter :authenticate_entity!, only: [:create]
 
-  # skip_before_filter :authenticate_scope!
-  # append_before_filter :authenticate_scope!, only: [:destroy]
+  skip_before_filter :authenticate_scope!
+  append_before_filter :authenticate_scope!, only: [:destroy]
 
   # POST /users
   def create
+    binding
     build_resource(sign_up_params)
 
     if resource.save
       sign_up(resource_name, resource)
-      render json: { created: true }
+      render json: { created: true, errors: [] }
       # render file: 'v1/custom_devise/registrations/create', status: :created
     else
       clean_up_passwords resource
-      render file: "#{Rails.root}/public/422.json", status: :unprocessable_entity, locals: { errors: resource.errors.full_messages }
+      render json: { created: false, errors: resource.errors.full_messages }
+
+      # render file: "#{Rails.root}/public/422.json", status: :unprocessable_entity, locals: { errors: resource.errors.full_messages }
     end
   end
 
@@ -34,6 +37,7 @@ class V1::CustomDevise::RegistrationsController < Devise::RegistrationsControlle
   private
 
   def sign_up_params
+    binding
     params.fetch(:user).permit([:password, :password_confirmation, :email, :first_name, :last_name])
   end
 
