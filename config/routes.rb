@@ -8,5 +8,8 @@ Rails.application.routes.draw do
   get 'mobile_auth_test', to: "test_endpoint#mobile_auth_test"
   devise_for :users, :controllers => {:registrations => "registrations"}
   post 'authenticate', to: 'authentication#authenticate'
+  get 'preferences', to: 'preferences#index'
+  get 'my_preferences', to: 'preferences#get_my_preferences'
+  post 'set_preferences', to: 'preferences#set_my_preferences'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
