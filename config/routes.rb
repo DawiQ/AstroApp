@@ -10,7 +10,7 @@ Rails.application.routes.draw do
   post 'authenticate', to: 'authentication#authenticate'
   get 'preferences', to: 'preferences#index'
   get 'my_preferences', to: 'preferences#get_my_preferences'
-  post 'set_preferences', to: 'preferences#set_my_preferences'
+  post 'my_preferences', to: 'preferences#set_my_preferences'
   get 'my_events', to: 'events#my_events'
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end
