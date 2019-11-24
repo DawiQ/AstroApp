@@ -14,6 +14,24 @@ ActiveAdmin.register Event do
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
+  show do
+    attributes_table do
+      row :date
+      row :preference
+      row :name
+      row :created_at
+      row :updated_at
+
+      panel "Comments " do
+        table_for resource.comments do
+          column :user
+          column :date
+          column :content
+        end
+      end
+
+    end
+  end
 
   form do |f|
     f.inputs do

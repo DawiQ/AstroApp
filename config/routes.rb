@@ -1,4 +1,8 @@
 Rails.application.routes.draw do
+  get 'comments/:id', to: 'comments#show'
+  post 'comments', to: 'comments#create'
+  put 'comments/:id', to: 'comments#update'
+  delete 'comments/:id', to: 'comments#delete'
   get 'events/', to: "events#index"
   get 'events/:id', to: "events#show"
   devise_for :admin_users, ActiveAdmin::Devise.config
