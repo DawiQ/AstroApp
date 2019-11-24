@@ -5,5 +5,9 @@ class EventSerializer < ActiveModel::Serializer
     Preference.find(object.preference_id).name
   end
 
-  has_many :comments
+  def comments
+    object.comments.order("date")
+  end
+
+  has_many :comments, serializer: PrettyCommentSerializer
 end
