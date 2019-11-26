@@ -1,5 +1,5 @@
 class PrettyCommentSerializer < ActiveModel::Serializer
-  attributes :id, :content, :date, :user_id, :user_email, :user_first_name, :user_last_name
+  attributes :id, :content, :date, :user_id, :user_email, :url, :user_first_name, :user_last_name
 
   def user_email
     User.find(object.user_id).email
