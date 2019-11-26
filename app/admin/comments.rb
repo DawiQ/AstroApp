@@ -14,5 +14,25 @@ ActiveAdmin.register Comment do
   #   permitted << :other if params[:action] == 'create' && current_user.admin?
   #   permitted
   # end
+  show do
+    attributes_table do
+      row :user
+      row :event
+      row :date
+      row :url
+      row :content
+    end
+  end
 
+  form do |f|
+    f.inputs do
+      f.inputs :user
+      f.inputs :event
+      f.inputs :date, as: :date_time_picker
+      f.inputs :url
+      f.inputs :content
+    end
+
+    f.actions
+  end
 end
