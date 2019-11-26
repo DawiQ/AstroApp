@@ -1,5 +1,5 @@
 class EventSerializer < ActiveModel::Serializer
-  attributes :id, :name, :date, :type
+  attributes :id, :name, :date, :type, :preference_id
 
   def type
     Preference.find(object.preference_id).name
