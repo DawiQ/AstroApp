@@ -5,7 +5,7 @@ ActiveAdmin.register Comment do
   #
   # Uncomment all parameters which should be permitted for assignment
   #
-  permit_params :user_id, :event_id, :date, :content
+  permit_params :user_id, :event_id, :date, :content, :url
   #
   # or
   #
