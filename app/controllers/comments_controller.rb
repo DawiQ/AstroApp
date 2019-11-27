@@ -7,6 +7,7 @@ class CommentsController < AstroController
       user_id: @current_user.id,
       event_id: params["event_id"],
       content: params["content"],
+      url: params["url"],
       date: Time.zone.now,
     )
 
@@ -19,7 +20,13 @@ class CommentsController < AstroController
     return render json: { errors: "No id given" } if params["id"].blank?
     return render json: { errors: "No event_id given" } if params["content"].blank?
 
-    comment = Comment.update(params["id"], {content: params["content"]})
+    if params["content"].present?
+      comment = Comment.update(params["id"], {content: params["content"]})
+    end
+    if params["url"].present?
+      comment = Comment.update(params["id"], {url: params["url"]})
+    end
+
     render json: { success: comment, errors: [] }
   rescue => e
     render json: { success: false, errors: [e] }
