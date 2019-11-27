@@ -1,6 +1,6 @@
 class EventsController < AstroController
   def index
-    render json: Event.all
+    render json: Event.all.order(:date)
   end
 
   def show
@@ -16,6 +16,14 @@ class EventsController < AstroController
     else
       render json: events.limit(1)
     end
+  end
+
+  def incoming
+    render json: Event.where("date > ?", Time.zone.now).order(:date)
+  end
+
+  def archived
+    render json: Event.where("date < ?", Time.zone.now).order(:date)
   end
 
   def my_events

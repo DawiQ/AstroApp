@@ -5,6 +5,8 @@ Rails.application.routes.draw do
   delete 'comments/:id', to: 'comments#delete'
   get 'current_event', to: "events#current_event"
   get 'events/', to: "events#index"
+  get 'events/incoming', to: "events#incoming"
+  get 'events/archived', to: "events#archived"
   post 'events/', to: "events#create"
   get 'events/:id', to: "events#show"
   devise_for :admin_users, ActiveAdmin::Devise.config
